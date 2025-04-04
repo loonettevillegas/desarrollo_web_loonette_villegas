@@ -1,0 +1,25 @@
+* {background-color: #babaf8;
+font-size: large;
+font-style: italic;
+font-weight: 1000;
+align-items: center;
+
+}
+
+
+
+ .Menu {
+    margin-bottom: 20px;
+    padding: 3px 10px;
+    font-family: 'Lobster';
+    font-weight: 1000;
+    border: rgb(255, 255, 255) 8px groove;
+    margin: 0 auto;
+}
+ .back {
+    margin-bottom: 20px;
+    padding: 3px 10px;
+    font-family: 'Lobster';
+    font-weight: 1000;
+    border: rgb(255, 255, 255) 8px groove;
+}

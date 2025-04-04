@@ -1,0 +1,50 @@
+.titulo{
+font-size: xx-large;
+font-weight: 1000;
+margin-bottom: 20px;
+
+
+}
+body{
+background-color: #babaf8;
+border-radius: 100px;
+margin: 0 auto;
+font-family: 'Lobster';
+     font-weight: 1000;
+
+width: 60%;
+}
+
+
+.region_class{
+    margin-bottom: 20px;
+    padding: 3px 10px;
+    font-family: 'Lobster';
+    font-weight: 1000;
+    border: rgb(255, 255, 255) 8px groove;   
+}
+.comuna_class{
+    margin-bottom: 20px;
+    padding: 3px 10px;
+    font-family: 'Lobster';
+    font-weight: 1000;
+    border: rgb(255, 255, 255) 8px groove;
+   
+}
+
+
+.botones{
+    margin-bottom: 20px;
+    padding: 3px 10px;
+    font-family: 'Lobster';
+    font-weight: 1000;
+    border: rgb(255, 255, 255) 8px groove;
+   
+}
+.Menu {
+    margin-bottom: 20px;
+    padding: 3px 10px;
+    font-family: 'Lobster';
+    font-weight: 1000;
+    border: rgb(255, 255, 255) 8px groove;
+}

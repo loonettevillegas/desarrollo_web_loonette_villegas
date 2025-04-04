@@ -1,0 +1,17 @@
+
+Body {background-color: #babaf8;
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+   
+    margin: 0; /* Elimina márgenes */
+    flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+
+}
+ .Menu {
+    margin-bottom: 20px;
+    padding: 3px 10px;
+    font-family: 'Lobster';
+    font-weight: 1000;
+    border: rgb(255, 255, 255) 8px groove;
+}
