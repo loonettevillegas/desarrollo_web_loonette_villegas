@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+            <meta charset="UTF-8">
+            <title > Agregar actividad  </title> 
+            <link rel="stylesheet" type="text/css" href="css/style-activity.css">
+    </head>
+
+    <body>
+    <div class="main-container">
+        <div id="val-box" hidden>
+            <h2 id="val-msg"></h2>
+            <ul id="val-list"></ul>
+        </div>
+        <form id = "first-form" method="post" enctype="multipart/form-data" >
+            <h2>Lugar del evento:</h2>
+                
+            <div > 
+                <select class="region_class" name="region" id="region" >
+                    <option value="">Seleccionar Region</option>
+                </select>
+            </div>
+
+            <div> 
+                <select class="comuna_class" name="comuna" id="comuna">
+                    <option value="">Seleccionar Comuna</option>
+                </select>
+            </div>
+
+
+
+            <div>
+                <textarea class="cuadro" name="areaTexto" id="sector_text" rows="4" cols="50">Sector</textarea>
+            </div>
+        
+        
+        <h2>Información organizador:</h2>
+        
+            
+            <div id="nameComprador-input" >
+                <label >Nombre organizador </label>
+                <input class="grupo1-input" id="name_input" name="Nombre organizador" type="text" maxlength="200">
+            </div>
+
+            <div id="mail-input" >
+                <label for="email">Email</label>
+                <input class="grupo2-input" id="email" name="email" type="email" maxlength="100" >
+            </div>
+                
+            <div id="celular-input" >
+                <label for = "contacto">Número de contacto</label>
+                <input class="grupo3-input" id="contacto" name="contacto" type="tel" maxlength="15" >
+            </div>       
+        
+
+            <div > 
+            <b >Seleccione medio de contacto </b>
+                <select class="contact_class" name="contact" id="contact_select_form" >
+                        <option value="">-- Seleccione --</option>
+                        <option value="1">Telegram </option>
+                        <option value="2">X </option>
+                        <option value="3">WhatsApp </option>
+                        <option value="4">TikTok </option>
+                        <option value="5">Instagram </option>
+                        <option value="6">Reddit </option>
+                </select>
+            </div>
+            
+            <div id="contact-selection" hidden >
+                        <label > Contacto</label>
+                        <input class="description-contact-input" id="description-contact-input" name="description-contact-input" type="text" minlength="4" maxlength="50">
+            </div>
+
+
+
+            <h2>Información actividad:</h2>
+
+
+
+            
+                    <div class="initial-date">
+                        <label for="fecha">Fecha de inicio:</label>
+                        <input type="datetime-local" id="date-initial-form" name="date">
+                       
+                    </div>
+                    
+                    <div class="end-date">
+                        <label for="fecha">Fecha de término:</label>
+                        <input type="datetime-local" id="date-end-form" name="date">
+                       
+                    </div>
+
+
+
+                    
+        
+                    <div id="Descripción" >
+                        <label > Descripción</label>
+                        <input class="descripcion-input" id="descripcion-input" name="descripcioninput" type="text" cols="50" rows ="10">
+                    </div>
+                    
+                    <div> 
+                     <b > Escoja tema para la actividad </b>
+                        <select class="theme_class" name="theme_input" id="theme_select_form" onchange="selectedThemes()" >
+                        
+                        <option value=""> --Seleccione-- </option>
+                        <option value="1">Música </option>
+                        <option value="2">Deporte </option>
+                        <option value="3">Ciencias </option>
+                        <option value="4">Religión </option>
+                        <option value="5">Política </option>
+                        <option value="6">Tecnología </option> 
+                        <option value="7">Juegos </option>
+                        <option value="8">Baile </option>
+                        <option value="9">Comida </option>
+                        <option value="10">Otro </option>                
+                        </select>
+                    </div>   
+                    <div class ="show-selections"></div>
+
+                    <div id="Other-selection" hidden >
+                        <label > Describa el tema</label>
+                        <input class="description-theme-input" id="description-theme-input" name="description-theme-input" type="text" minlength="3" maxlength="15">
+                    </div>
+
+
+                    <div >
+                                <b>Fotos</b><br>
+                                <input  class= "input-file" type="file" id="photo_1" multiple accept="image/*,.pdf">
+                                
+                    </div>
+
+
+            </form>
+
+    <div class="boton">
+          <button class = "submit-btn"id="submit-btn"  type="button">
+            Agregar actividad
+          </button>
+        </div>
+        <div class="boton">
+          <button class="Menu" id ="menu_boton" onclick="window.location.href='index.html'">Volver al menú principal</button>
+          
+        </div>
+
+      <script src="js/validador-info.js"></script>
+
+    </body>
+</html>

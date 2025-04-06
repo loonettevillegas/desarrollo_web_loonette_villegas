@@ -1,0 +1,51 @@
+* {
+background-color: #fdf6f0;
+font-size: large;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+     font-weight: 1000;
+align-items: center;
+
+}
+
+
+
+  .Menu{
+  margin-bottom: 20px;
+  padding: 3px 10px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-weight: 1000;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: larger;
+  align-items: center;
+  transition: all 0.5s ease-in-out;
+  background: #ff0080;
+  color: white;
+    width: 400px;
+
+ 
+}
+.Menu:hover {
+  background: white;
+  color: #ff0080;
+}
+ .back{
+  margin-bottom: 20px;
+  padding: 3px 10px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-weight: 1000;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: larger;
+  align-items: center;
+  transition: all 0.5s ease-in-out;
+  background: #ff0080;
+  color: white;
+    width: 400px;
+
+ 
+}
+.back:hover {
+  background: white;
+  color: #ff0080;
+}

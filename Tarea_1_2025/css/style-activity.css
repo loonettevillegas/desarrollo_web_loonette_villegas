@@ -1,0 +1,159 @@
+.titulo{
+font-size: xx-large;
+font-weight: 1000;
+margin-bottom: 20px;
+
+
+}
+body{
+background-color: #fdf6f0;
+border-radius: 100px;
+margin: 0 auto;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+     font-weight: 1000;
+
+width: 60%;
+}
+
+
+.region_class,.contact_class{
+  width: 400px;
+  margin-bottom: 20px;
+  padding: 10px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-weight: 1000;
+  border-radius: 10px;
+  font-size: larger;
+  background: white;
+  color: #ff0080;
+  border: 2px solid #ff0080;
+  transition: all 0.3s ease-in-out;
+}
+
+.theme_class{
+  width: 400px;
+  margin-bottom: 20px;
+  padding: 10px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-weight: 1000;
+  border-radius: 10px;
+  font-size: larger;
+  background: white;
+  color: #ff0080;
+  border: 2px solid #ff0080;
+  transition: all 0.3s ease-in-out;
+}
+
+.comuna_class{
+width: 400px;
+  margin-bottom: 20px;
+  padding: 10px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-weight: 1000;
+  border-radius: 10px;
+  font-size: larger;
+  background: white;
+  color: #ff0080;
+  border: 2px solid #ff0080;
+  transition: all 0.3s ease-in-out;
+   
+}
+
+
+ 
+
+
+ .Menu,.submit-btn{
+  margin-bottom: 20px;
+  padding: 3px 10px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-weight: 1000;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: larger;
+  border: none;
+  align-items: center;
+  transition: all 0.5s ease-in-out;
+  background: #ff0080;
+  color: white;
+    width: 400px;
+
+ 
+}
+.Menu:hover,.submit-btn:hover {
+  background: white;
+  color: #ff0080;
+}
+.cuadro,.descripcion-input{
+  width: 400px;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-weight: 1000;
+  border: 2px solid #001f3f; 
+  border-radius: 10px;
+  font-size: larger;
+  color: #001f3f;
+  background: white;
+  transition: all 0.3s ease-in-out;
+}
+
+
+.grupo1-input, .grupo2-input,.grupo3-input,.description-contact-input,.description-theme-input{
+  width: 200px;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-weight: 1000;
+  border: 2px solid #001f3f; 
+  border-radius: 10px;
+  font-size: medium;
+  color: #001f3f;
+  background: white;
+  transition: all 0.3s ease-in-out;
+}
+.main-container {
+  background-color: #ff0080;
+  padding: 30px;
+  border-radius: 15px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  width: 450px; 
+  margin: 0 auto; 
+}
+
+
+.input-file {
+  width: 50%;
+  padding: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-weight: 1000;
+  border: 2px solid #001f3f; 
+  border-radius: 10px;
+  font-size: medium;
+  color: #001f3f;
+  background: white;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.initial-date, .end-date {
+  margin-bottom: 20px;
+}
+
+.initial-date input, .end-date input {
+  width: 30%;
+  padding: 10px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-weight: 1000;
+  border: 2px solid #001f3f; /* Borde azul marino */
+  border-radius: 10px;
+  font-size: medium;
+  color: #001f3f;
+  background: white;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+
