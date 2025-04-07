@@ -7,7 +7,12 @@
     </head>
 
     <body>
-        <form id = "first-activity-form" >
+    <div class="main-container">
+        <div id="val-box" hidden>
+            <h2 id="val-msg"></h2>
+            <ul id="val-list"></ul>
+        </div>
+        <form id = "first-form" method="post" enctype="multipart/form-data" >
             <h2>Lugar del evento:</h2>
                 
             <div > 
@@ -25,13 +30,12 @@
 
 
             <div>
-                <textarea class="cuadro" name="areaTexto" rows="4" cols="50">Sector</textarea>
+                <textarea class="cuadro" name="areaTexto" id="sector_text" rows="4" cols="50">Sector</textarea>
             </div>
         
-        </form>
         
         <h2>Información organizador:</h2>
-        <form id = "second-activity-form" >
+        
             
             <div id="nameComprador-input" >
                 <label >Nombre organizador </label>
@@ -44,15 +48,14 @@
             </div>
                 
             <div id="celular-input" >
-                <label >Número de contacto</label>
+                <label for = "contacto">Número de contacto</label>
                 <input class="grupo3-input" id="contacto" name="contacto" type="tel" maxlength="15" >
             </div>       
         
 
             <div > 
+            <b >Seleccione medio de contacto </b>
                 <select class="contact_class" name="contact" id="contact_select_form" >
-
-                     <label > Escoja tema para la actividad </label>
                         <option value="">-- Seleccione --</option>
                         <option value="1">Telegram </option>
                         <option value="2">X </option>
@@ -69,13 +72,12 @@
             </div>
 
 
-            </form>
 
             <h2>Información actividad:</h2>
 
 
 
-            <form id = "third-activity-form" >
+            
                     <div class="initial-date">
                         <label for="fecha">Fecha de inicio:</label>
                         <input type="datetime-local" id="date-initial-form" name="date">
@@ -98,8 +100,9 @@
                     </div>
                     
                     <div> 
+                     <b > Escoja tema para la actividad </b>
                         <select class="theme_class" name="theme_input" id="theme_select_form" onchange="selectedThemes()" >
-                        <label > Escoja tema para la actividad </label> 
+                        
                         <option value=""> --Seleccione-- </option>
                         <option value="1">Música </option>
                         <option value="2">Deporte </option>
@@ -123,19 +126,20 @@
 
                     <div >
                                 <b>Fotos</b><br>
-                                <input class="photo" type="file" id="photo_1" multiple>
+                                <input  class= "input-file" type="file" id="photo_1" multiple accept="image/*,.pdf">
+                                
                     </div>
 
 
             </form>
 
-    <div >
-          <button class="botones" type="button" id="envio" onclick="submitForm()">
+    <div class="boton">
+          <button class = "submit-btn"id="submit-btn"  type="button">
             Agregar actividad
           </button>
         </div>
         <div class="boton">
-          <button class="Menu" onclick="window.location.href='index.html'">Volver al menú principal</button>
+          <button class="Menu" id ="menu_boton" onclick="window.location.href='index.html'">Volver al menú principal</button>
           
         </div>
 

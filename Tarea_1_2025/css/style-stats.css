@@ -1,17 +1,35 @@
 
-Body {background-color: #babaf8;
+Body {
     display: flex;
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
-   
-    margin: 0; /* Elimina márgenes */
-    flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+    justify-content: center; 
+    align-items: center; 
+   background-color: #fdf6f0;
+font-size: large;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+     font-weight: 1000;
+    margin: 0; 
+    flex-direction: column; 
 
 }
- .Menu {
-    margin-bottom: 20px;
-    padding: 3px 10px;
-    font-family: 'Lobster';
-    font-weight: 1000;
-    border: rgb(255, 255, 255) 8px groove;
+
+
+  .Menu{
+  margin-bottom: 20px;
+  padding: 3px 10px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-weight: 1000;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: larger;
+  align-items: center;
+  transition: all 0.5s ease-in-out;
+  background: #ff0080;
+  color: white;
+    width: 400px;
+
+ 
+}
+.Menu:hover {
+  background: white;
+  color: #ff0080;
 }

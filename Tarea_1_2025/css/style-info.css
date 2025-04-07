@@ -1,25 +1,122 @@
-* {background-color: #babaf8;
+* {
+background-color: #fdf6f0;
 font-size: large;
-font-style: italic;
-font-weight: 1000;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+     font-weight: 1000;
 align-items: center;
 
 }
+ .container .title{
+ font-size: 50px;
+ font-family: Verdana, Geneva, Tahoma, sans-serif;
+ font-weight: bolder;
+ padding: 15px;
+ color: #ff0080;
+ text-align: top;
+ text-transform: capitalize;
+
+ }
 
 
+  .Menu{
+  margin-bottom: 20px;
+  padding: 3px 10px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-weight: 1000;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: larger;
+  align-items: center;
+  transition: all 0.5s ease-in-out;
+  background: #ff0080;
+  color: white;
+    width: 400px;
+    border: none;
 
- .Menu {
-    margin-bottom: 20px;
-    padding: 3px 10px;
-    font-family: 'Lobster';
-    font-weight: 1000;
-    border: rgb(255, 255, 255) 8px groove;
-    margin: 0 auto;
+ 
 }
- .back {
-    margin-bottom: 20px;
-    padding: 3px 10px;
-    font-family: 'Lobster';
-    font-weight: 1000;
-    border: rgb(255, 255, 255) 8px groove;
+.Menu:hover {
+  background: white;
+  color: #ff0080;
 }
+ .back{
+  margin-bottom: 20px;
+  padding: 3px 10px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-weight: 1000;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: larger;
+  align-items: center;
+  transition: all 0.5s ease-in-out;
+  background: #ff0080;
+  color: white;
+    width: 400px;
+border: none;
+ 
+}
+.back:hover {
+  background: white;
+  color: #ff0080;
+}
+
+.container{
+display: flex ;
+flex-wrap: wrap;
+gap: 15px;
+justify-content: center;
+padding: 10px;
+
+}
+.container .Image-container .image{
+height: 240px;
+width: 320px;
+border: 10 px solid #ffff;
+box-shadow: 0 5px 15px rgb(0, 0, .1);
+overflow: hidden;
+cursor: pointer;
+
+}
+.container .Image-container .image img{
+height: 100%;
+width: 100%;
+object-fit: cover;
+transition: .2s linear;
+}
+.container .Image-container .image:hover img{
+transform: scale(1.1);
+}
+.container .popup-im{
+position: fixed;
+top:0 ; left : 0;
+background: rgb(0, 0,0, .9);
+height: 100%;
+width: 100%;
+z-index: 100;
+display: none;
+}
+
+
+.container .popup-im span{
+position: absolute;
+top: 0; right: 10 px;
+font-size: 60px;
+font-weight: bolder;
+color: #ff0080;
+cursor: pointer;
+z-index: 100;
+
+}
+
+.container .popup-im img{
+position: absolute;
+top: 50%; left: 50%;
+transform: translate(-50%,-50%);
+border: 10px solid #ff0080;
+border-radius: 5px;
+width: 800px;
+height: 600px;
+object-fit: cover;
+
+}
+ 
