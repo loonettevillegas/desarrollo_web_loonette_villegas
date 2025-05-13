@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title >Taller de tejido  </title> 
+
+  {% block css %}
+  <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style-info.css') }}"
+  />
+  {% endblock %}
+</head>
+
+
+<div class="container">
+<h2 class="title">Taller de Amigurumi</h2>
+
+<div>
+  <ul>
+    <li>Fecha y hora de inicio :  2025-03-01 16:00 </li>
+    <li>Fecha y hora de término : 2025-03-01 19:00 </li>
+    <li>Comuna : La Cisterna</li>
+    <li>Sector : Municipalidad</li>
+    <li>Tema : Tejidos </li>
+    <li>Nombre de organizador : Andrés Cáceres </li>
+    
+  </ul>
+</div>
+
+  
+      <div class="Image-container">
+      <div class = "image"><img src="fotos/amigurumi_1.jpeg" alt="amigurumi_1"></div>
+      <div class = "image"><img src="fotos/amigurumi_2.jpeg" alt="amigurumi_2"></div>
+      <div class = "image"><img src="fotos/amigurumi_3.webp" alt="amigurumi_3"></div>
+      </div>
+
+
+<div class="popup-im">
+<span>&times;</span>
+<img src="fotos/amigurumi_1.jpeg" alt="">
+
+</div>
+        <div class="botones">
+          <button class="Menu" onclick="window.location.href='index.html'">Volver al menú principal</button>
+          <button class="back" onclick="window.location.href='listaActividades.html'">Volver lista de actividades</button>
+        </div>
+
+      <script src="js/validador-list.js"></script>
+</div>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title > Feria del libro  </title> 
+  {% block css %}
+  <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style-info.css') }}"
+  />
+  {% endblock %}
+</head>
+
+
+<div class="container">
+<h2 class="title">Feria del libro</h2>
+
+<div>
+  <ul>
+    <li>Fecha y hora de inicio :  2025-05-07 09:00 </li>
+    <li>Fecha y hora de término : 2025-05-16 19:00 </li>
+    <li>Comuna : Santiago </li>
+    <li>Sector : GAM </li>
+    <li>Tema : Feria del libro </li>
+    <li>Nombre de organizador : Manuel Salas </li>
+  </ul>
+</div>
+
+  
+      <div class="Image-container">
+      <div class = "image"><img src="fotos/libros_2.jpeg" alt="libros1"></div>
+      <div class = "image"><img src="fotos/libros_3.jpg" alt="libros2"></div>
+      <div class = "image"><img src="fotos/libros_1.webp" alt="libros3"></div>
+      </div>
+
+
+<div class="popup-im">
+<span>&times;</span>
+<img src="fotos/libros_2.jpeg" alt="">
+
+</div>
+        <div class="botones">
+          <button class="Menu" onclick="window.location.href='index.html'">Volver al menú principal</button>
+          <button class="back" onclick="window.location.href='listaActividades.html'">Volver lista de actividades</button>
+        </div>
+
+      <script src="js/validador-list.js"></script>
+</div>
+</html>

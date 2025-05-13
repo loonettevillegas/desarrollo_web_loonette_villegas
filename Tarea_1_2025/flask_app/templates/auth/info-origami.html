@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title >Taller de origami  </title> 
+  {% block css %}
+  <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style-info.css') }}"
+  />
+  {% endblock %}
+</head>
+
+<div class="container">
+<h2 class="title">Taller de origami</h2>
+<div>
+    <ul>
+    <li>Fecha y hora de inicio:  2025-03-23 10:00 </li>
+    <li>Fecha y hora de término: 2025-03-23 15:00 </li>
+    <li>Comuna: San Bernardo </li>
+    <li>Sector: Biblioteca municipal de San Bernardo </li>
+    <li>Tema: Taller de Origami </li>
+    <li>Nombre de organizador: Andrew Bernanrd </li>
+    
+    
+  </ul>
+</div>
+
+  
+      <div class="Image-container">
+      <div class = "image"><img src="fotos/origami_1.webp" alt="origami_1"></div>
+      <div class = "image"><img src="fotos/origami_2.webp" alt="origami_2"></div>
+      <div class = "image"><img src="fotos/origami_3.webp" alt="origami_3"></div>
+      </div>
+
+
+<div class="popup-im">
+<span>&times;</span>
+<img src="fotos/origami_1.webp" alt="">
+
+</div>
+        <div class="botones">
+          <button class="Menu" onclick="window.location.href='index.html'">Volver al menú principal</button>
+          <button class="back" onclick="window.location.href='listaActividades.html'">Volver lista de actividades</button>
+        </div>
+
+      <script src="js/validador-list.js"></script>
+</div>
+</html>
