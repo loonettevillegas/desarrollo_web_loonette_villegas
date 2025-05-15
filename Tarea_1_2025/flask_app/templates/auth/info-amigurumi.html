@@ -44,10 +44,12 @@
 
 </div>
         <div class="botones">
-          <button class="Menu" onclick="window.location.href='index.html'">Volver al menú principal</button>
+<button class="Menu" id="menu_boton" onclick="window.location.href='{{ url_for('index') }}'">Volver al menú principal</button>         
           <button class="back" onclick="window.location.href='listaActividades.html'">Volver lista de actividades</button>
         </div>
 
-      <script src="js/validador-list.js"></script>
+      {% block javascript %}
+    <script src="{{ url_for('static', filename='js/validador-list.js') }}"></script>
+     {% endblock %}
 </div>
 </html>

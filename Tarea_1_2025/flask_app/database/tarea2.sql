@@ -126,3 +126,7 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+---------Adding some data for the front page-----
+
+
+--INSERT INTO `tarea2`.`actividad` (`id`, `comuna_id`, `sector`, `nombre`, `email`, `celular`,`dia_hora_inicio`,`dia_hora_termino`,`descripcion`) VALUES (1, ,'La Reina','Parque intercomunal La Reina','');

@@ -399,26 +399,26 @@ let regiones = {
         "Vitacura"
     ],
           
-}
+};
 
 
-const choose_region= document.getElementById('region'),
-        choose_comuna=document.getElementById('comuna')
+const choose_region= document.getElementById('region');
+        choose_comuna=document.getElementById('comuna');
 
-        choose_comuna.disabled=true
+        choose_comuna.disabled=true;
         
 for(let region  in regiones ){
-choose_region.options[choose_region.options.length] = new Option(region, region)
+choose_region.options[choose_region.options.length] = new Option(region, region);
 
 }
 choose_region.onchange= (n) =>{
-choose_comuna.disabled= false
-choose_comuna.length=1
+choose_comuna.disabled= false;
+choose_comuna.length=1;
 
 let comuna = regiones[n.target.value]
 
         for(let i=0; i<comuna.length; i++){
-            choose_comuna.options[choose_comuna.options.length] = new Option(comuna[i], comuna[i])
+            choose_comuna.options[choose_comuna.options.length] = new Option(comuna[i], comuna[i]);
         }
 
     }
@@ -498,7 +498,7 @@ const validateFiles = (files) => {
 
 const validateSelect = (select) => {
   if(!select) return false;
-  return true
+  return true;
 }
 const validate_regions = (index)=>{
     
@@ -520,9 +520,9 @@ const validateFinalDate = (date1, date2) =>{
  if (!date2) return false;
  let re = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
  let formatValid = re.test(date2);
-const d1 = new Date(date1)
-const d2 = new Date(date2)
-let validDate = d1<d2 
+const d1 = new Date(date1);
+const d2 = new Date(date2);
+let validDate = d1<d2 ;
 return  formatValid && validDate;
  }
 
@@ -544,7 +544,7 @@ const validateForm = ()=> {
     let time2 = myForm["date-end-form"].value;
     let description_sector = myForm["sector_text"].value;
     let description_contact = myForm["description-contact-input"].value;
-    let contact = myForm["contact_select_form"].value
+    let contact = myForm["contact_select_form"].value;
    
 
 
@@ -584,7 +584,7 @@ const validateForm = ()=> {
 
     }
     if(!validateSelect(contact)){
-        setInvalidInput("Selección contacto")
+        setInvalidInput("Selección contacto");
     }
     if (validateSelect(contact)&&!validateAnyText(description_contact,4,50)){
         setInvalidInput("Descripción del contacto");
@@ -654,8 +654,8 @@ const validateForm = ()=> {
             submitButton.style.marginRight = "10px";
             submitButton.addEventListener("click", () => {
              validationMessageElem.innerText = "Hemos recibido su información, muchas gracias y suerte en su actividad";
-             submitButton.style.display = "none"
-             backButton.style.display = "none"
+             submitButton.style.display = "none";
+             backButton.style.display = "none";
              
 
             });

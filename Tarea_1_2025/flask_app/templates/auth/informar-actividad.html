@@ -18,18 +18,30 @@
             <h2 id="val-msg"></h2>
             <ul id="val-list"></ul>
         </div>
-        <form id = "first-form" method="post" enctype="multipart/form-data" >
+        <form id = "first-form" method="POST" action="" enctype="multipart/form-data" >
             <h2>Lugar del evento:</h2>
+                
                 
             <div > 
                 <select class="region_class" name="region" id="region" >
-                    <option value="">Seleccionar Region</option>
+                    <option disabled selected value="0">Seleccione una región</option>
+                    {% for region in regiones %}
+                        <option value="{{ region[0] }}">{{ region[1] }}</option>
+                    {% endfor %}
                 </select>
             </div>
 
+    
+    
+
             <div> 
                 <select class="comuna_class" name="comuna" id="comuna">
-                    <option value="">Seleccionar Comuna</option>
+                    <option disabled selected value="0">Seleccione una comuna</option>
+                    {% if comunas_data %}
+                        {% for comuna in comunas_data %}
+                            <option value="{{ comuna['id'] }}">{{ comuna['name'] }}</option>
+                        {% endfor %}
+                    {% endif %}
                 </select>
             </div>
 
@@ -62,18 +74,14 @@
             <div > 
             <b >Seleccione medio de contacto </b>
                 <select class="contact_class" name="contact" id="contact_select_form" >
-                        <option value="">-- Seleccione --</option>
-                        <option value="1">Telegram </option>
-                        <option value="2">X </option>
-                        <option value="3">WhatsApp </option>
-                        <option value="4">TikTok </option>
-                        <option value="5">Instagram </option>
-                        <option value="6">Reddit </option>
+                        {% for contacto in contactar_por %}
+                                <option value="{{ contacto[0] }}">{{ contacto[1] }}</option>
+                        {% endfor %}
                 </select>
             </div>
             
             <div id="contact-selection" hidden >
-                        <label > Contacto</label>
+                        <label >Contacto</label>
                         <input class="description-contact-input" id="description-contact-input" name="description-contact-input" type="text" minlength="4" maxlength="50">
             </div>
 
@@ -81,9 +89,6 @@
 
             <h2>Información actividad:</h2>
 
-
-
-            
                     <div class="initial-date">
                         <label for="fecha">Fecha de inicio:</label>
                         <input type="datetime-local" id="date-initial-form" name="date">
@@ -145,11 +150,11 @@
           </button>
         </div>
         <div class="boton">
-          <button class="Menu" id ="menu_boton" onclick="window.location.href='index.html'">Volver al menú principal</button>
-          
+<button class="Menu" id="menu_boton" onclick="window.location.href='{{ url_for('index') }}'">Volver al menú principal</button>          
         </div>
-
-      <script src="js/validador-info.js"></script>
+{% block javascript %}
+    <script src="{{ url_for('static', filename='js/validador-info.js') }}"></script>
+     {% endblock %}
 
     </body>
 </html>
