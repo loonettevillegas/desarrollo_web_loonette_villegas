@@ -24,9 +24,9 @@
                 
             <div > 
                 <select class="region_class" name="region" id="region" >
-                    <option disabled selected value="0">Seleccione una región</option>
+                    <option disabled selected value="0" name = 'region'>Seleccione una región</option>
                     {% for region in regiones %}
-                        <option value="{{ region[0] }}">{{ region[1] }}</option>
+                        <option value="{{ region.id }}">{{ region.nombre }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -36,12 +36,12 @@
 
             <div> 
                 <select class="comuna_class" name="comuna" id="comuna">
-                    <option disabled selected value="0">Seleccione una comuna</option>
                     {% if comunas_data %}
-                        {% for comuna in comunas_data %}
-                            <option value="{{ comuna['id'] }}">{{ comuna['name'] }}</option>
-                        {% endfor %}
-                    {% endif %}
+          {% for comuna in comunas_data %}
+            <option value="{{ comuna['id'] }}">{{ comuna['name'] }}</option>
+          {% endfor %}
+        {% endif %}
+                    
                 </select>
             </div>
 
@@ -74,8 +74,8 @@
             <div > 
             <b >Seleccione medio de contacto </b>
                 <select class="contact_class" name="contact" id="contact_select_form" >
-                        {% for contacto in contactar_por %}
-                                <option value="{{ contacto[0] }}">{{ contacto[1] }}</option>
+                        {% for contacto in medios_contactos %}
+                            <option value="{{ contacto.id }}">{{ contacto.value }}</option>
                         {% endfor %}
                 </select>
             </div>
@@ -91,13 +91,13 @@
 
                     <div class="initial-date">
                         <label for="fecha">Fecha de inicio:</label>
-                        <input type="datetime-local" id="date-initial-form" name="date">
+                        <input type="datetime-local" id="date-initial-form" name="date_inicio">
                        
                     </div>
                     
                     <div class="end-date">
                         <label for="fecha">Fecha de término:</label>
-                        <input type="datetime-local" id="date-end-form" name="date">
+                        <input type="datetime-local" id="date-end-form" name="date_fin">
                        
                     </div>
 
@@ -137,7 +137,7 @@
 
                     <div >
                                 <b>Fotos</b><br>
-                                <input  class= "input-file" type="file" id="photo_1" multiple accept="image/*,.pdf">
+                                <input  class= "input-file" name ="fotos" type="file" id="photo_1" multiple accept="image/*,.pdf">
                                 
                     </div>
 

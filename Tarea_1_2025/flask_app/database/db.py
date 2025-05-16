@@ -1,5 +1,8 @@
-from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey,DateTime, Enum
+
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey,Enum
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
+
 import pymysql
 import json
 import enum
@@ -11,19 +14,20 @@ DB_HOST = "localhost"
 DB_PORT = 3306
 DB_CHARSET = "utf8"
 
-#with open('database/querys.json', 'r') as querys:
-#	QUERY_DICT = json.load(querys)
+DATABASE_URL = f"mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+
+engine = create_engine(DATABASE_URL, echo=False, future=True)
+SessionLocal = sessionmaker(bind=engine)
 
 Base = declarative_base()
 
 
 
 class Region(Base):
-	__tablename__ = 'region'
-	id =  Column(Integer, primary_key=True, autoincrement=True)
-	nombre = Column(String(200), nullable=False)
-	comunas = relationship("Comuna", backref="region")
-	actividades = relationship("Actividad", backref="region")
+      __tablename__ = 'region'
+      id =  Column(Integer, primary_key=True, autoincrement=True)
+      nombre  = Column(String(200), nullable=False)
+      #comunas = relationship("Comuna", backref="region")
 
 class Comuna(Base):
     __tablename__ = 'comuna' 
@@ -31,7 +35,7 @@ class Comuna(Base):
     nombre = Column(String(200), nullable=False)
     region_id = Column(Integer, ForeignKey('region.id'), nullable=False)
 
-    region = relationship("Region", backref="comunas")
+    region = relationship("Region", backref="comuna")
 
 
 	
@@ -53,7 +57,7 @@ class Actividad(Base):
 
 class Foto(Base):
 	__tablename__ =  'foto'
-	id = Column(Integer, primary_key = True, autoincremente = True)
+	id = Column(Integer, primary_key = True, autoincrement = True)
 	ruta_archivo =  Column(String(300), nullable = False)
 	nombre_archivo = Column(String(300), nullable = False)
 	actividad_id = Column(Integer, ForeignKey('actividad.id'), primary_key=True)
@@ -97,31 +101,97 @@ class ActividadTema(Base):
 
 
 
-# -- conn ---
+# -- definir funciones ---
 
-def get_conn():
-	conn = pymysql.connect(
-		db=DB_NAME,
-		user=DB_USERNAME,
-		passwd=DB_PASSWORD,
-		host=DB_HOST,
-		port=DB_PORT,
-		charset=DB_CHARSET
-	)
-	return conn
-with open('database/querys.json', 'r') as querys:
-	QUERY_DICT = json.load(querys)
+
 	
 def get_regions():
-	conn = get_conn()
-	cursor = conn.cursor()
-	cursor.execute(QUERY_DICT["get_regiones"])
-	regiones = cursor.fetchall()
-	return regiones
+    session = SessionLocal()
+    try:
+        regions = session.query(Region).all()
+        return regions
+    finally:
+        session.close()
 
-def get_comunas():
-	pass
+def get_comunas(region_id):
+	session = SessionLocal()
+	try:
+		comunas = session.query(Comuna).filter_by(region_id=region_id).all()
+		return comunas
+	finally:
+		session.close()
 
 
-def create_activity():
-	pass
+def create_actividad(sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion, region_id, comuna_id, temas_ids, contactos_ids, nombres_archivos):
+    session = SessionLocal()
+    try:
+        nueva_actividad = Actividad(
+            sector=sector,
+            nombre=nombre,
+            email=email,
+            celular=celular,
+            dia_hora_inicio=dia_hora_inicio,
+            dia_hora_termino=dia_hora_termino,
+            descripcion=descripcion,
+            region_id=region_id,
+            comuna_id=comuna_id
+        )
+        session.add(nueva_actividad)
+        session.flush() 
+
+        if temas_ids:
+            save_actividad_temas(session, nueva_actividad.id, temas_ids)
+
+
+        if contactos_ids:
+            save_actividad_contactos(session, nueva_actividad.id, contactos_ids)
+
+        if nombres_archivos:
+            save_actividad_archivos(session, nueva_actividad.id, nombres_archivos)
+
+        session.commit()
+        return True, nueva_actividad.id 
+    except Exception as e:
+        session.rollback()
+        return False, str(e) 
+    finally:
+        session.close()
+
+def save_actividad_temas(session, actividad_id, temas_ids):
+    for tema_id in temas_ids:
+        actividad_tema = ActividadTema(actividad_id=actividad_id, tema_id=tema_id)
+        session.add(actividad_tema)
+
+def save_actividad_contactos(session, actividad_id, contactos_ids):
+    for contacto_id in contactos_ids:
+        contacto = ContactarPor(actividad_id=actividad_id, medio_contacto_id=contacto_id)
+        session.add(contacto)
+
+def save_actividad_archivos(session, actividad_id, nombres_archivos):
+    for nombre_archivo in nombres_archivos:
+        archivo = Foto(actividad_id=actividad_id, nombre_archivo=nombre_archivo)
+        session.add(archivo)
+def obtener_last_five_actividades():
+    session = SessionLocal()
+    try:
+        ultimas_actividades = session.query(Actividad) \
+                                       .order_by(Actividad.id.desc()) \
+                                       .limit(5) \
+                                       .all()
+        return ultimas_actividades
+    finally:
+        session.close()
+        
+def get_temas():
+    session = SessionLocal()
+    themes = session.query(ActividadTema).all()
+    session.close()
+
+    return themes
+def get_contactos():
+    session = SessionLocal()
+    medios_contactos = session.query(ContactarPor).all()
+    session.close()
+
+    return medios_contactos
+    

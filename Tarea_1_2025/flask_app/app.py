@@ -1,6 +1,7 @@
-from flask import Flask, request, render_template, redirect, url_for, session
-#from utils.validations import validate_login_user, validate_register_user, validate_confession
+from flask import Flask, request, render_template, redirect, url_for, session,jsonify
+from utils.validations import validar_actividad
 from database import db
+
 from werkzeug.utils import secure_filename
 import hashlib
 import filetype
@@ -15,22 +16,52 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template("auth/index.html")
+    ultimas_actividades = db.obtener_last_five_actividades()
+    return render_template("auth/index.html", ultimas_actividades=ultimas_actividades)
 #-----------------------------------------------------------------------------------
 @app.route("/informar-actividad", methods = ["GET","POST"])
 def informar_actividad():
     if request.method == "POST":
-        pass
+        error = ""
+        region = request.form.get("region")
+        comuna = request.form.get("comuna")
+        nombre = request.form.get("Nombre organizador")
+        email = request.form.get("email")
+        celular = request.form.get("contacto")
+        sector = request.form.get("areaTexto")
+        contact = request.form.get("description-contact-input")
+        theme = request.form.get("theme_input")
+        inicio = request.form.get("date_inicio")
+        fin = request.form.get("date_fin")
+        fotos= request.form.get("fotos")
+        descripcion = request.form.get("descripcioninput")
+        if validar_actividad(region,comuna,nombre,email,celular,sector,descripcion,inicio,fin,theme, contact, fotos):
+            ##si es válido registramos la actividad
+            status, msg = db.create_actividad(region,comuna,nombre,email,celular,sector,descripcion,inicio,fin,theme, contact, fotos)
+
+            error += msg
+        else:
+            error += "Uno de los campos no es valido."
+
+        return render_template("auth/informar-actividad.html", error=error)
+
     elif request.method == "GET":
-        
-        return render_template("auth/informar-actividad.html")
+        region = request.args.get("region")
+        temas = db.get_temas()
+        medios_contactos = db.get_contactos()
+        if region:
+            comunas = db.get_comunas(region)
+            comunas_data = [{"id": comuna.id, "nombre": comuna.nombre} for comuna in comunas]
+            return jsonify(comunas_data)
+        else:
+            regiones = db.get_regions()
+                
+            return render_template("auth/informar-actividad.html",regiones=regiones, temas =temas, medios_contactos =medios_contactos)
     
 
-@app.route("/listaActividades", methods = ["GET","POST"])
+@app.route("/listaActividades", methods = ["GET"])
 def listaActividades():
-    if request.method == "POST":
-        pass
-    elif request.method == "GET":
+    if request.method == "GET":
         
         return render_template("auth/listaActividades.html")##faltan 2 cosas revisar 
     
