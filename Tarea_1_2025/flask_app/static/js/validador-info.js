@@ -144,6 +144,7 @@ return  formatValid && validDate;
 
 
 const validateForm = (event)=> {
+  console.log("Objeto event recibido:", event);
 
     event.preventDefault(); 
 //extrayendo info
@@ -265,22 +266,24 @@ const validateForm = (event)=> {
 
   document.getElementById("confirmarButton").addEventListener("click", function() {
     firstPopup.style.display = "none"; 
-   sendFormData();
+    sendFormData();
   });
 
   document.getElementById("cancelarButton").addEventListener("click", function() {
     firstPopup.style.display = "none"; 
+
   });
 }
 
 function popup2() {
-    console.log("Ejecutando popup2() simplificado");
+    console.log("Ejecutando popup2() ");
     const secondPopup = document.getElementById("popup_confirmacion");
-    if (secondPopup) {
-        secondPopup.style.display = "block";
-    } else {
-        console.error("No se encontró popup_confirmacion");
-    }
+   secondPopup.style.display = "block";
+
+  document.getElementById("returnButton").addEventListener("click", function() {
+    secondPopup.style.display = "none";
+    window.location.href = "/";
+     });
 }    
 
 function sendFormData() {
@@ -310,5 +313,3 @@ function sendFormData() {
     });
     
 }
-let submitBtn = document.getElementById("submit-btn");
-submitBtn.addEventListener("click", validateForm);

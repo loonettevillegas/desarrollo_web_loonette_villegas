@@ -43,13 +43,13 @@ def informar_actividad():
             activity = db.create_actividad(region,comuna,nombre,email,celular,sector,descripcion,inicio,fin,theme, contact,contact_description, fotos)
 
             
-            if activity:
-                return jsonify({'success': True, 'message': 'Registro de actividad exitoso'})
-            else:
-                return jsonify({'success': False, 'error': 'Error al guardar la actividad en la base de datos.'}) 
-        else:
-            error += "Uno de los campos no es válido."
-            return jsonify({'success': False, 'error': error})
+            if activity is None:
+                        return jsonify({'success': False,  "message": " No se pudo"})
+
+           
+
+        
+        return jsonify({'success': True,  "message": " Se pudo"})
 
 
 
@@ -135,9 +135,10 @@ def actividades_paginadas():
 #----------------------------------------actividades----------------------------------------------
 @app.route("/detalle/<int:id>", methods=["GET"])
 def detalle(id):
-
+    print(id)
     actividad = db.obtener_actividad_por_id(id)
-    return render_template("auth/detalle.html", actividad = actividad, obtener_tema=db.obtener_tema_por_id, obtener_comuna= db.comuna_por_id, obtener_foto= db.foto_por_id)
+    print(f'esta',actividad.id)
+    return render_template("auth/detalle.html", actividad = actividad, obtener_tema=db.obtener_tema_por_id, obtener_comuna= db.comuna_por_id, obtener_foto= db.foto_detalle, obtener_contacto = db.obtener_contacto_por_id)
 
 @app.route("/estadisticas", methods = ["GET"])
 def estadisticas():

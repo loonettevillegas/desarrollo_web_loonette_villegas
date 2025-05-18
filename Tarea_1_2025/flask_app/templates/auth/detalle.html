@@ -13,23 +13,42 @@
 </head>
 
 <div class="container">
-    <h2 class="title">{{obtener_tema(actividad.id) }}</h2>
+    <h2 class="title">{{actividad.descripcion }}</h2>
 
     <div>
+                <h2 class="subtitulo"> Información general</h2>
+
         <ul>
             <li><strong>Fecha y hora de inicio:</strong> {{ actividad.dia_hora_inicio }}</li>
             <li><strong>Fecha y hora de término:</strong> {{ actividad.dia_hora_termino }}</li>
             <li><strong>Comuna:</strong> {{ obtener_comuna(actividad.comuna_id) }}</li>
             <li><strong>Sector:</strong> {{ actividad.sector }}</li>
             <li><strong>Tema:</strong> {{ obtener_tema(actividad.id) }}</li>
+            <li><strong>Descripción:</strong> {{ actividad.descripcion }}</li>
+
             <li><strong>Nombre de organizador:</strong> {{ actividad.nombre }}</li>
-            <li><strong>Total fotos:</strong> <img src="{{ obtener_foto(actividad.id) }}" alt="Foto" style="max-width: 200px; max-height: 200px;"></li>
             </ul>
-<div class="botones">
+            <h2 class="subtitulo">Contacto organizador</h2>
+            <ul>
+            <li><strong>Celular:</strong> {{actividad.celular }}</li>
+            <li><strong>Email organizador:</strong> {{ actividad.email }}</li>
+            </ul>
+            <h2 class="subtitulo">Redes sociales</h2>
+
+            <ul>
+            <li><strong>Plataforma:</strong> {{ obtener_contacto(actividad.id).nombre.value }}</li>
+            <li><strong>Cuenta:</strong> {{ obtener_contacto(actividad.id).identificador }}</li>
+            </ul>
+
+
+
+<li class = "image"><strong>Total fotos:</strong> <img src="{{ url_for('static', filename=obtener_foto(actividad.id).replace('/detalle/', '', 1).replace('static/', '', 1)) }}" alt="Foto" style="max-width: 200px; max-height: 200px;"></li>            </ul>
+
+
           <button class="Menu" onclick="window.location.href='{{ url_for('index') }}'">Volver al menú principal</button>
             <button class="back" onclick="window.history.back()">Volver lista de actividades</button>
         </div>   
          </div>
-</div>
+
 
 </html>

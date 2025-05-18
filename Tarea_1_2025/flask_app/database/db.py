@@ -1,8 +1,9 @@
 
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey,Enum
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey,Enum, delete
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 from werkzeug.utils import secure_filename
+from flask import url_for
 from sqlalchemy.orm import joinedload
 
 import os
@@ -192,16 +193,15 @@ def create_contacto(session, actividad_id, contactos,contact_description):
                 session.add(contacto)
             except ValueError as e:
                 print(f"Error al crear contacto: {e}")
-
 def create_fotos(session, actividad_id, fotos):
     for foto in fotos:
         if foto:
             filename = secure_filename(foto.filename)
-            ruta_destino = os.path.join(UPLOAD_FOLDER, filename)
+            ruta_destino_completa = os.path.join(UPLOAD_FOLDER, filename)
+            ruta_archivo_db = os.path.join('uploads', filename).replace('\\', '/') 
+            nombre_archivo_db = filename
             try:
-                foto.save(ruta_destino)  
-                ruta_archivo_db = ruta_destino  
-                nombre_archivo_db = filename
+                foto.save(ruta_destino_completa)
                 nuevo_archivo = Foto(
                     actividad_id=actividad_id,
                     ruta_archivo=ruta_archivo_db,
@@ -210,7 +210,7 @@ def create_fotos(session, actividad_id, fotos):
                 session.add(nuevo_archivo)
             except Exception as e:
                 print(f"Error al guardar el archivo: {e}")
-                session.rollback() 
+                session.rollback()
 def obtener_last_five_actividades():
     session = SessionLocal()
     try:
@@ -238,11 +238,16 @@ def comuna_por_id(id):
 def foto_por_id(id):
     session = SessionLocal()
     try:
-        foto = session.query(Foto.ruta_archivo).filter(Foto.actividad_id == id).first()
-        return foto[0] if foto else None
+        foto_ruta_relativa = session.query(Foto.ruta_archivo).filter(Foto.actividad_id == id).first()
+        if foto_ruta_relativa:
+            ruta_completa = url_for('static', filename=foto_ruta_relativa[0])
+            print(f"Ruta de la foto encontrada para actividad {id}: {ruta_completa}")
+            return ruta_completa
+        else:
+            print(f"No se encontró foto para actividad {id}")
+            return None
     finally:
         session.close()
-
 def obtener_todas_actividades(page):
     session = SessionLocal()
     try:
@@ -257,6 +262,57 @@ def cantidad_actividades():
      return sum
 def obtener_actividad_por_id(id):
     session = SessionLocal()
-
     actividad = session.query(Actividad).filter(Actividad.id == id).first()
     return actividad
+
+def foto_detalle(id):
+    session = SessionLocal()
+    try:
+        foto = session.query(Foto.ruta_archivo).filter(Foto.actividad_id == id).first()
+        if foto and foto[0]:
+
+            ruta_corregida = foto[0].replace('\\', '/')
+            
+            return ruta_corregida
+        return None
+    finally:
+        session.close()
+
+def obtener_contacto_por_id(id):
+     session = SessionLocal()
+     contacto = session.query(ContactarPor).filter(ContactarPor.actividad_id == id).first()
+     session.close()
+     return contacto
+
+
+
+def eliminar_todos_los_datos(nombre_tabla):
+    session = SessionLocal()
+    try:
+        if nombre_tabla == "actividad":
+            modelo = Actividad
+        elif nombre_tabla == "foto":
+            modelo = Foto
+        elif nombre_tabla == "contactar_por":
+            modelo = ContactarPor
+        elif nombre_tabla == "actividad_tema":
+            modelo = ActividadTema
+        else:
+            print(f"Tabla '{nombre_tabla}' no reconocida.")
+            return
+
+        stmt = delete(modelo)
+        result = session.execute(stmt)
+        session.commit()
+        print(f"Se eliminaron {result.rowcount} registros de la tabla '{nombre_tabla}'.")
+    except Exception as e:
+        session.rollback()
+        print(f"Error al eliminar datos de la tabla '{nombre_tabla}': {e}")
+    finally:
+        session.close()
+
+#eliminar_todos_los_datos('foto')
+##eliminar_todos_los_datos('actividad_tema')
+##eliminar_todos_los_datos('contactar_por')
+##eliminar_todos_los_datos('actividad')
+

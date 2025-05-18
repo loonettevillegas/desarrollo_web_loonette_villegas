@@ -19,12 +19,13 @@
                 <h2 id="val-msg"></h2>
                 <ul id="val-list"></ul>
             </div>
-<form name="first-form" id="first-form" method="POST" enctype="multipart/form-data">                    <h2>Lugar del evento:</h2>
+    <form name="first-form" id="first-form" method="POST" enctype="multipart/form-data">             
+           <h2>Lugar del evento:</h2>
                     
                     
                 <div > 
                     <select class="region_class" name="region" id="region" >
-                        <option disabled selected value="0" name = 'region'>Seleccione una región</option>
+                        <option disabled selected value="0" >Seleccione una región</option>
                         {% for region in regiones %}
                             <option value="{{ region.id }}">{{ region.nombre }}</option>
                         {% endfor %}
@@ -61,12 +62,12 @@
                 </div>
 
                 <div id="mail-input" >
-                    <label for="email">Email</label>
+                    <label >Email</label>
                     <input class="grupo2-input" id="email" name="email" type="email" maxlength="100" >
                 </div>
                     
                 <div id="celular-input" >
-                    <label for = "contacto">Número de contacto</label>
+                    <label >Número de contacto</label>
                     <input class="grupo3-input" id="contacto" name="contacto" type="tel" maxlength="15" >
                 </div>       
             
@@ -91,13 +92,13 @@
                 <h2>Información actividad:</h2>
 
                         <div class="initial-date">
-                            <label for="fecha">Fecha de inicio:</label>
+                            <label >Fecha de inicio:</label>
                             <input type="datetime-local" id="date-initial-form" name="date_inicio">
                         
                         </div>
                         
                         <div class="end-date">
-                            <label for="fecha">Fecha de término:</label>
+                            <label >Fecha de término:</label>
                             <input type="datetime-local" id="date-end-form" name="date_fin">
                         
                         </div>
@@ -108,7 +109,7 @@
             
                         <div id="Descripción" >
                             <label > Descripción</label>
-                            <input class="descripcion-input" id="descripcion-input" name="descripcioninput" type="text" cols="50" rows ="10">
+                            <input class="descripcion-input" id="descripcion-input" name="descripcioninput" type="text" >
                         </div>
                         
                         <div> 
@@ -135,14 +136,22 @@
                                     <input  class= "input-file" name ="fotos" type="file" id="photo_1" multiple accept="image/*,.pdf">
                                     
                         </div>
-                        <button class="submit-btn" id="submit-btn" type="button">
+                        <button class="submit-btn" id="submit-btn" onclick="validateForm(event)" type="submit" >
                                     Agregar actividad
                         </button>
                         
+            </form>
+                        </div>
+ <div class="boton">
+                <button class="Menu" id="menu_boton" onclick="window.location.href='{{ url_for('index') }}'">Volver al menú principal</button>          
+            </div>
+                        
                         <div id="popup" class="popup">
+                       
       <div class="popup-content">
+      
         <p> ¿Está seguro que desea agregar esta actividad?</p>
-        <button id="confirmarButton" onclick="sendFormData()">Si, estoy seguro</button>
+        <button id="confirmarButton" >Si, estoy seguro</button>
         <button id="cancelarButton">No, no estoy seguro, quiero volver.</button>
       </div>
     </div>
@@ -153,12 +162,9 @@
       </div>
     </div>
 
-                </form>
 
         
-            <div class="boton">
-    <button class="Menu" id="menu_boton" onclick="window.location.href='{{ url_for('index') }}'">Volver al menú principal</button>          
-            </div>
+           
                 {% block javascript %}
                     <script src="{{ url_for('static', filename='js/validador-info.js') }}"></script>
                 {% endblock %}

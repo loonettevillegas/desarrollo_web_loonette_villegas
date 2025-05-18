@@ -4,12 +4,15 @@
     
 }
 body {
-    
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column; 
+    justify-content: flex-start; 
+    align-items: center; 
+    min-height: 100vh; 
+    margin: 0; 
+    padding-top: 20px; 
+    background-color: #fdf6f0; 
 }
- 
  .Menu{
  font-size: xx-large;
  color: rgb(0, 0, 0); 

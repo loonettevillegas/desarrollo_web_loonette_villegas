@@ -12,7 +12,6 @@ align-items: center;
  font-weight: bolder;
  padding: 15px;
  color: #ff0080;
- text-align: top;
  text-transform: capitalize;
 
  }
@@ -71,7 +70,7 @@ padding: 10px;
 .container .Image-container .image{
 height: 240px;
 width: 320px;
-border: 10 px solid #ffff;
+border: 10px solid #ffff;
 box-shadow: 0 5px 15px rgb(0, 0, .1);
 overflow: hidden;
 cursor: pointer;
@@ -99,7 +98,8 @@ display: none;
 
 .container .popup-im span{
 position: absolute;
-top: 0; right: 10 px;
+top: 0; 
+right: 10px;
 font-size: 60px;
 font-weight: bolder;
 color: #ff0080;
@@ -118,5 +118,11 @@ width: 800px;
 height: 600px;
 object-fit: cover;
 
+}
+.subtitulo {
+    font-size: 1.5em;
+    border-bottom: 2px solid #ccc;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
 }
  
