@@ -13,148 +13,155 @@
     </head>
 
     <body>
-    <div class="main-container">
-        <div id="val-box" hidden>
-            <h2 id="val-msg"></h2>
-            <ul id="val-list"></ul>
-        </div>
-        <form id = "first-form" method="POST" action="" enctype="multipart/form-data" >
-            <h2>Lugar del evento:</h2>
-                
-                
-            <div > 
-                <select class="region_class" name="region" id="region" >
-                    <option disabled selected value="0" name = 'region'>Seleccione una región</option>
-                    {% for region in regiones %}
-                        <option value="{{ region.id }}">{{ region.nombre }}</option>
-                    {% endfor %}
-                </select>
+    
+        <div class="main-container">
+            <div id="val-box" hidden>
+                <h2 id="val-msg"></h2>
+                <ul id="val-list"></ul>
             </div>
-
-    
-    
-
-            <div> 
-                <select class="comuna_class" name="comuna" id="comuna">
-                    {% if comunas_data %}
-          {% for comuna in comunas_data %}
-            <option value="{{ comuna['id'] }}">{{ comuna['name'] }}</option>
-          {% endfor %}
-        {% endif %}
+<form name="first-form" id="first-form" method="POST" enctype="multipart/form-data">                    <h2>Lugar del evento:</h2>
                     
-                </select>
-            </div>
-
-
-
-            <div>
-                <textarea class="cuadro" name="areaTexto" id="sector_text" rows="4" cols="50">Sector</textarea>
-            </div>
-        
-        
-        <h2>Información organizador:</h2>
-        
-            
-            <div id="nameComprador-input" >
-                <label >Nombre organizador </label>
-                <input class="grupo1-input" id="name_input" name="Nombre organizador" type="text" maxlength="200">
-            </div>
-
-            <div id="mail-input" >
-                <label for="email">Email</label>
-                <input class="grupo2-input" id="email" name="email" type="email" maxlength="100" >
-            </div>
-                
-            <div id="celular-input" >
-                <label for = "contacto">Número de contacto</label>
-                <input class="grupo3-input" id="contacto" name="contacto" type="tel" maxlength="15" >
-            </div>       
-        
-
-            <div > 
-            <b >Seleccione medio de contacto </b>
-                <select class="contact_class" name="contact" id="contact_select_form" >
-                        {% for contacto in medios_contactos %}
-                            <option value="{{ contacto.id }}">{{ contacto.value }}</option>
+                    
+                <div > 
+                    <select class="region_class" name="region" id="region" >
+                        <option disabled selected value="0" name = 'region'>Seleccione una región</option>
+                        {% for region in regiones %}
+                            <option value="{{ region.id }}">{{ region.nombre }}</option>
                         {% endfor %}
-                </select>
-            </div>
-            
-            <div id="contact-selection" hidden >
-                        <label >Contacto</label>
-                        <input class="description-contact-input" id="description-contact-input" name="description-contact-input" type="text" minlength="4" maxlength="50">
-            </div>
+                    </select>
+                </div>
 
-
-
-            <h2>Información actividad:</h2>
-
-                    <div class="initial-date">
-                        <label for="fecha">Fecha de inicio:</label>
-                        <input type="datetime-local" id="date-initial-form" name="date_inicio">
-                       
-                    </div>
-                    
-                    <div class="end-date">
-                        <label for="fecha">Fecha de término:</label>
-                        <input type="datetime-local" id="date-end-form" name="date_fin">
-                       
-                    </div>
-
-
-
-                    
         
-                    <div id="Descripción" >
-                        <label > Descripción</label>
-                        <input class="descripcion-input" id="descripcion-input" name="descripcioninput" type="text" cols="50" rows ="10">
-                    </div>
-                    
-                    <div> 
-                     <b > Escoja tema para la actividad </b>
-                        <select class="theme_class" name="theme_input" id="theme_select_form" onchange="selectedThemes()" >
+        
+
+                <div> 
+                    <select class="comuna_class" name="comuna" id="comuna">
+            {% if comunas_data %}
+                        {% for comuna in comunas_data %}
+                            <option value="{{ comuna['id'] }}">{{ comuna['name'] }}</option>
+                        {% endfor %}
+            {% endif %}
                         
-                        <option value=""> --Seleccione-- </option>
-                        <option value="1">Música </option>
-                        <option value="2">Deporte </option>
-                        <option value="3">Ciencias </option>
-                        <option value="4">Religión </option>
-                        <option value="5">Política </option>
-                        <option value="6">Tecnología </option> 
-                        <option value="7">Juegos </option>
-                        <option value="8">Baile </option>
-                        <option value="9">Comida </option>
-                        <option value="10">Otro </option>                
-                        </select>
-                    </div>   
-                    <div class ="show-selections"></div>
-
-                    <div id="Other-selection" hidden >
-                        <label > Describa el tema</label>
-                        <input class="description-theme-input" id="description-theme-input" name="description-theme-input" type="text" minlength="3" maxlength="15">
-                    </div>
+                    </select>
+                </div>
 
 
-                    <div >
-                                <b>Fotos</b><br>
-                                <input  class= "input-file" name ="fotos" type="file" id="photo_1" multiple accept="image/*,.pdf">
-                                
-                    </div>
+
+                <div>
+                    <textarea class="cuadro" name="areaTexto" id="sector_text" rows="4" cols="50">Sector</textarea>
+                </div>
+            
+            
+            <h2>Información organizador:</h2>
+            
+                
+                <div id="nameComprador-input" >
+                    <label >Nombre organizador </label>
+                    <input class="grupo1-input" id="name_input" name="Nombre organizador" type="text" maxlength="200">
+                </div>
+
+                <div id="mail-input" >
+                    <label for="email">Email</label>
+                    <input class="grupo2-input" id="email" name="email" type="email" maxlength="100" >
+                </div>
+                    
+                <div id="celular-input" >
+                    <label for = "contacto">Número de contacto</label>
+                    <input class="grupo3-input" id="contacto" name="contacto" type="tel" maxlength="15" >
+                </div>       
+            
+
+                <div > 
+                <b >Seleccione medio de contacto </b>
+                    <select class="contact_class" name="contact_se" id="contact_select_form" >
+                    <option disabled selected value="">--Seleccione--</option>
+                            {% for opcion in medios_contactos %}
+                                <option value="{{ opcion.value }}">{{ opcion.value }}
+                            {% endfor %}
+                    </select>
+                </div>
+                
+                <div id="contact-selection" hidden >
+                            <label >Contacto</label>
+                            <input class="description-contact-input" id="description-contact-input" name="description-contact-input" type="text" minlength="4" maxlength="50">
+                </div>
 
 
-            </form>
 
-    <div class="boton">
-          <button class = "submit-btn"id="submit-btn"  type="button">
-            Agregar actividad
-          </button>
-        </div>
-        <div class="boton">
-<button class="Menu" id="menu_boton" onclick="window.location.href='{{ url_for('index') }}'">Volver al menú principal</button>          
-        </div>
-{% block javascript %}
-    <script src="{{ url_for('static', filename='js/validador-info.js') }}"></script>
-     {% endblock %}
+                <h2>Información actividad:</h2>
+
+                        <div class="initial-date">
+                            <label for="fecha">Fecha de inicio:</label>
+                            <input type="datetime-local" id="date-initial-form" name="date_inicio">
+                        
+                        </div>
+                        
+                        <div class="end-date">
+                            <label for="fecha">Fecha de término:</label>
+                            <input type="datetime-local" id="date-end-form" name="date_fin">
+                        
+                        </div>
+
+
+
+                        
+            
+                        <div id="Descripción" >
+                            <label > Descripción</label>
+                            <input class="descripcion-input" id="descripcion-input" name="descripcioninput" type="text" cols="50" rows ="10">
+                        </div>
+                        
+                        <div> 
+                        <b > Escoja tema para la actividad </b>
+                            <select class="theme_class" name="theme_input" id="theme_select_form"  >
+                            
+                            <option value=""> --Seleccione-- </option>
+                            {% for opcion in temas %}
+                                <option value="{{ opcion.value }}">{{ opcion.value }}
+                            {% endfor %}
+                                        
+                            </select>
+                        </div>   
+                        <div class ="show-selections"></div>
+
+                        <div id="Other-selection" hidden >
+                            <label > Describa el tema</label>
+                            <input class="description-theme-input" id="description-theme-input" name="description-theme-input" type="text" minlength="3" maxlength="15">
+                        </div>
+
+
+                        <div >
+                                    <b>Fotos</b><br>
+                                    <input  class= "input-file" name ="fotos" type="file" id="photo_1" multiple accept="image/*,.pdf">
+                                    
+                        </div>
+                        <button class="submit-btn" id="submit-btn" type="button">
+                                    Agregar actividad
+                        </button>
+                        
+                        <div id="popup" class="popup">
+      <div class="popup-content">
+        <p> ¿Está seguro que desea agregar esta actividad?</p>
+        <button id="confirmarButton" onclick="sendFormData()">Si, estoy seguro</button>
+        <button id="cancelarButton">No, no estoy seguro, quiero volver.</button>
+      </div>
+    </div>
+    <div id="popup_confirmacion" class="popup">
+      <div class="popup-content">
+        <p>Hemos recibido su información, muchas gracias y suerte en su actividad.</p>
+        <button id="returnButton">Volver a la portada</button>
+      </div>
+    </div>
+
+                </form>
+
+        
+            <div class="boton">
+    <button class="Menu" id="menu_boton" onclick="window.location.href='{{ url_for('index') }}'">Volver al menú principal</button>          
+            </div>
+                {% block javascript %}
+                    <script src="{{ url_for('static', filename='js/validador-info.js') }}"></script>
+                {% endblock %}
 
     </body>
 </html>

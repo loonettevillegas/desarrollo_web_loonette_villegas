@@ -2,7 +2,10 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey,Enum
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
+from werkzeug.utils import secure_filename
+from sqlalchemy.orm import joinedload
 
+import os
 import pymysql
 import json
 import enum
@@ -13,6 +16,7 @@ DB_PASSWORD = "programacionweb"
 DB_HOST = "localhost"
 DB_PORT = 3306
 DB_CHARSET = "utf8"
+UPLOAD_FOLDER = 'static/uploads'
 
 DATABASE_URL = f"mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
@@ -42,15 +46,18 @@ class Comuna(Base):
 
 
 class Actividad(Base):
-	__tablename__ = 'actividad'
-	id = Column(Integer, primary_key=True, autoincrement=True)
-	sector = Column(String(100), nullable=True)
-	nombre = Column(String(200), nullable=False)
-	email = Column(String(100), nullable=False)
-	celular = Column(String(15), nullable=True)
-	dia_hora_inicio = Column(DateTime, nullable=False)
-	dia_hora_termino = Column(DateTime, nullable=True)
-	descripcion = Column(String(500), nullable=True)
+     __tablename__ = 'actividad'
+     id = Column(Integer, primary_key=True, autoincrement=True)
+     sector = Column(String(100), nullable=True)
+     nombre = Column(String(200), nullable=False)
+     email = Column(String(100), nullable=False)
+     celular = Column(String(15), nullable=True)
+     dia_hora_inicio = Column(DateTime, nullable=False)
+     dia_hora_termino = Column(DateTime, nullable=True)
+     descripcion = Column(String(500), nullable=True)
+     comuna_id = Column(Integer, ForeignKey('comuna.id'), nullable=False) 
+     comuna = relationship("Comuna", backref="actividades")
+     foto = relationship("Foto", back_populates="actividad")
 
 
 
@@ -80,12 +87,12 @@ class ContactarPor(Base):
     actividad = relationship("Actividad", backref="contactos_por")
 
 class Temas(enum.Enum):
-	musica = 'música'
+	música = 'música'
 	deporte = 'deporte'
 	ciencias = 'ciencias'
-	religion = 'religión'
-	politica = 'política'
-	tecnologia = 'tecnología'
+	religión = 'religión'
+	política = 'politica'
+	tecnología = 'tecnología'
 	juegos = 'juegos'
 	baile = 'baile'
 	comida = 'comida'
@@ -96,7 +103,7 @@ class ActividadTema(Base):
 	id = Column(Integer, primary_key=True, autoincrement=True)
 	tema = Column(Enum(Temas), nullable=False)
 	glosa_otro = Column(String(15), nullable=True)
-	actividad_id = Column(Integer, ForeignKey('actividad.id'), primary_key=True) # Clave primaria compuesta
+	actividad_id = Column(Integer, ForeignKey('actividad.id'), primary_key=True) 
 	actividad = relationship("Actividad", backref="temas")
 
 
@@ -122,76 +129,134 @@ def get_comunas(region_id):
 		session.close()
 
 
-def create_actividad(sector, nombre, email, celular, dia_hora_inicio, dia_hora_termino, descripcion, region_id, comuna_id, temas_ids, contactos_ids, nombres_archivos):
+def create_actividad(region,comuna,nombre,email,celular,sector,descripcion,inicio,fin,theme, contact,contact_description, fotos):
     session = SessionLocal()
-    try:
-        nueva_actividad = Actividad(
+    
+    nueva_actividad = Actividad(
             sector=sector,
             nombre=nombre,
             email=email,
             celular=celular,
-            dia_hora_inicio=dia_hora_inicio,
-            dia_hora_termino=dia_hora_termino,
+            dia_hora_inicio=inicio,
+            dia_hora_termino=fin,
             descripcion=descripcion,
-            region_id=region_id,
-            comuna_id=comuna_id
+            comuna_id=comuna
         )
-        session.add(nueva_actividad)
-        session.flush() 
+    session.add(nueva_actividad)
+    session.flush() 
 
-        if temas_ids:
-            save_actividad_temas(session, nueva_actividad.id, temas_ids)
+    
+    create_temas(session, nueva_actividad.id, theme)
+    create_fotos(session, nueva_actividad.id, fotos)
 
 
-        if contactos_ids:
-            save_actividad_contactos(session, nueva_actividad.id, contactos_ids)
+    if contact:
+            create_contacto(session, nueva_actividad.id, contact,contact_description)
 
-        if nombres_archivos:
-            save_actividad_archivos(session, nueva_actividad.id, nombres_archivos)
+    
 
-        session.commit()
-        return True, nueva_actividad.id 
-    except Exception as e:
-        session.rollback()
-        return False, str(e) 
-    finally:
-        session.close()
+    session.commit()
+    session.close()
 
-def save_actividad_temas(session, actividad_id, temas_ids):
-    for tema_id in temas_ids:
-        actividad_tema = ActividadTema(actividad_id=actividad_id, tema_id=tema_id)
-        session.add(actividad_tema)
+    return True 
+    
 
-def save_actividad_contactos(session, actividad_id, contactos_ids):
-    for contacto_id in contactos_ids:
-        contacto = ContactarPor(actividad_id=actividad_id, medio_contacto_id=contacto_id)
-        session.add(contacto)
+def create_temas(session, actividad_id, temas):
+    if isinstance(temas, list):
+        for tema_str in temas:
+            try:
+                tema_enum_value = Temas(tema_str)  
+                actividad_tema = ActividadTema(actividad_id=actividad_id, tema=tema_enum_value)
+                session.add(actividad_tema)
+            except ValueError:
+                print(f"Error: El valor '{tema_str}' no es un tema válido.")
+    elif isinstance(temas, str):
+        try:
+            tema_enum_value = Temas(temas)
+            actividad_tema = ActividadTema(actividad_id=actividad_id, tema=tema_enum_value)
+            session.add(actividad_tema)
+        except ValueError:
+            print(f"Error: El valor '{temas}' no es un tema válido.")
 
-def save_actividad_archivos(session, actividad_id, nombres_archivos):
-    for nombre_archivo in nombres_archivos:
-        archivo = Foto(actividad_id=actividad_id, nombre_archivo=nombre_archivo)
-        session.add(archivo)
+def create_contacto(session, actividad_id, contactos,contact_description):
+    for contacto in contactos:
+            try:
+                
+                nombre_contacto = ContactarPorOpciones(contacto) 
+                identificador_contacto = contact_description    
+                contacto = ContactarPor(
+                    actividad_id=actividad_id,
+                    nombre=nombre_contacto,
+                    identificador=identificador_contacto
+                )
+                session.add(contacto)
+            except ValueError as e:
+                print(f"Error al crear contacto: {e}")
+
+def create_fotos(session, actividad_id, fotos):
+    for foto in fotos:
+        if foto:
+            filename = secure_filename(foto.filename)
+            ruta_destino = os.path.join(UPLOAD_FOLDER, filename)
+            try:
+                foto.save(ruta_destino)  
+                ruta_archivo_db = ruta_destino  
+                nombre_archivo_db = filename
+                nuevo_archivo = Foto(
+                    actividad_id=actividad_id,
+                    ruta_archivo=ruta_archivo_db,
+                    nombre_archivo=nombre_archivo_db
+                )
+                session.add(nuevo_archivo)
+            except Exception as e:
+                print(f"Error al guardar el archivo: {e}")
+                session.rollback() 
 def obtener_last_five_actividades():
     session = SessionLocal()
     try:
         ultimas_actividades = session.query(Actividad) \
                                        .order_by(Actividad.id.desc()) \
                                        .limit(5) \
+                                       .options(joinedload(Actividad.foto)) \
                                        .all()
         return ultimas_actividades
     finally:
         session.close()
         
-def get_temas():
+def obtener_tema_por_id(actividad_id):
+     session = SessionLocal()
+     actividad_tema = session.query(ActividadTema).filter_by(actividad_id=actividad_id).first()
+     session.close()
+     return actividad_tema.tema.value if actividad_tema else None
+def comuna_por_id(id):
     session = SessionLocal()
-    themes = session.query(ActividadTema).all()
-    session.close()
-
-    return themes
-def get_contactos():
+    try:
+        comuna = session.query(Comuna).filter(Comuna.id == id).first()
+        return comuna.nombre if comuna else None
+    finally:
+        session.close()
+def foto_por_id(id):
     session = SessionLocal()
-    medios_contactos = session.query(ContactarPor).all()
-    session.close()
+    try:
+        foto = session.query(Foto.ruta_archivo).filter(Foto.actividad_id == id).first()
+        return foto[0] if foto else None
+    finally:
+        session.close()
 
-    return medios_contactos
-    
+def obtener_todas_actividades(page):
+    session = SessionLocal()
+    try:
+        offset = (page - 1) * 5
+        actividades = session.query(Actividad).limit(5).offset(offset).all()
+        return actividades
+    finally:
+        session.close()    
+def cantidad_actividades():
+     session = SessionLocal()
+     sum = session.query(Actividad).count()
+     return sum
+def obtener_actividad_por_id(id):
+    session = SessionLocal()
+
+    actividad = session.query(Actividad).filter(Actividad.id == id).first()
+    return actividad

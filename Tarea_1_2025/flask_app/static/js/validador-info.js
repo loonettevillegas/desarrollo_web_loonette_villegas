@@ -1,5 +1,5 @@
 
-//logica comunas document.addEventListener('DOMContentLoaded', function() {
+//logica comunas 
 document.addEventListener('DOMContentLoaded', function() {
     const regionSelect = document.getElementById('region');
     const comunaSelect = document.getElementById('comuna');
@@ -34,6 +34,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+//logica contacto
+
+
+
+//logica tema
     
 
 //hidden value for theme description
@@ -88,7 +94,7 @@ const validatePhoneNumber = (phoneNumber) => {
   if (!phoneNumber) return false;
   let lengthValid = phoneNumber.length >= 8;
 
-  let re = /^[0-9]+$/;
+  let re = /^\+\d{3}\.\d{8}$/;
   let formatValid = re.test(phoneNumber);
 
   return lengthValid && formatValid;
@@ -137,11 +143,11 @@ return  formatValid && validDate;
 
 
 
-const validateForm = ()=> {
+const validateForm = (event)=> {
 
-
+    event.preventDefault(); 
 //extrayendo info
-    let myForm = document.forms["first-form"];
+    let myForm = document.getElementById('first-form');;
     let email = myForm["email"].value;
     let phoneNumber = myForm["contacto"].value;
     let name = myForm["name_input"].value;
@@ -152,7 +158,7 @@ const validateForm = ()=> {
     let time = myForm["date-initial-form"].value;
     let time2 = myForm["date-end-form"].value;
     let description_sector = myForm["sector_text"].value;
-    let description_contact = myForm["description-contact-input"].value;
+    let description_contact = myForm["contact_select_form"].value;
     let contact = myForm["contact_select_form"].value;
    
 
@@ -246,43 +252,63 @@ const validateForm = ()=> {
         } else {
           
             // Ocultar el formulario
-            myForm.style.display = "none";
+           // myForm.style.display = "none";
             
 
-            // establecer mensaje de éxito
-            validationMessageElem.innerText = "¿Está seguro que desea agregar esta actividad?";
-            validationListElem.textContent = "";
-            
-            // aplicar estilos de éxito
-            validationBox.style.backgroundColor = "#ddffdd";
-            validationBox.style.borderLeftColor = "#4CAF50";
-
-            // Agregar botones para enviar el formulario o volver
-            let submitButton = document.createElement("button");
-            submitButton.innerText = "Si, estoy seguro";
-            submitButton.style.marginRight = "10px";
-            submitButton.addEventListener("click", () => {
-             validationMessageElem.innerText = "Hemos recibido su información, muchas gracias y suerte en su actividad";
-             submitButton.style.display = "none";
-             backButton.style.display = "none";
-             
-
-            });
-
-            let backButton = document.createElement("button");
-            backButton.innerText = "No, no estoy seguro, quiero volver.";
-            backButton.addEventListener("click", () => {
-            
-            myForm.style.display = "block";
-            validationBox.hidden = true;
-            });
-
-            validationListElem.appendChild(submitButton);
-            validationListElem.appendChild(backButton);
-
-            // hacer visible el mensaje de validación
-            validationBox.hidden = false;
+           Popup1();
         }
         };
+
+ function Popup1() {
+  const firstPopup = document.getElementById("popup");
+  firstPopup.style.display = "block";
+
+  document.getElementById("confirmarButton").addEventListener("click", function() {
+    firstPopup.style.display = "none"; 
+   sendFormData();
+  });
+
+  document.getElementById("cancelarButton").addEventListener("click", function() {
+    firstPopup.style.display = "none"; 
+  });
+}
+
+function popup2() {
+    console.log("Ejecutando popup2() simplificado");
+    const secondPopup = document.getElementById("popup_confirmacion");
+    if (secondPopup) {
+        secondPopup.style.display = "block";
+    } else {
+        console.error("No se encontró popup_confirmacion");
+    }
+}    
+
+function sendFormData() {
+  const form = document.getElementById("first-form");
+  const formData = new FormData(form);
+
+  fetch("/informar-actividad", {
+    method: "POST",
+    body: formData,
+  })
+  
+    .then((response) => response.json())
+    .then((data) => {
+    console.log("Data success:", data.success); 
+      if (data.success) {
+                  console.log("Llamando a popup2() desde sendFormData"); // Para confirmar que se intenta llamar
+
+            popup2();
+      } else {
+        console.error("Error:", data.message);
+      }
+    })
+    .catch((error) => {
+      console.error("Fetch error:", error);
+    alert("Ocurrió un error de conexión. Por favor, inténtelo de nuevo."); 
+
+    });
+    
+}
 let submitBtn = document.getElementById("submit-btn");
 submitBtn.addEventListener("click", validateForm);

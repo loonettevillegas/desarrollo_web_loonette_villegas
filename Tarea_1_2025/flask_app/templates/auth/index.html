@@ -40,22 +40,55 @@
     
 
 
-      <ul>
-         {% for actividad in ultimas_actividades %}
-            <li>
-                <strong>{{ actividad.nombre }}</strong><br>
-                {% if actividad.sector %}Sector: {{ actividad.sector }}<br>{% endif %}
-                Email: {{ actividad.email }}<br>
-                {% if actividad.celular %}Celular: {{ actividad.celular }}<br>{% endif %}
-                Inicio: {{ actividad.dia_hora_inicio }}<br>
-                {% if actividad.dia_hora_termino %}Término: {{ actividad.dia_hora_termino }}<br>{% endif %}
-                Descripción: {{ actividad.descripcion }}<br>
-                </li>
-            <hr>
-        {% else %}
-            <li>No hay actividades registradas aún.</li>
-        {% endfor %}
-    </ul>
+    <table id="first_table" class="default">
+
+  <tr >
+
+    <th> Inicio  </th>
+
+    <th> Término </th>
+
+    <th> Comuna </th>
+    
+    <th> Sector </th>
+    
+    <th> Tema </th>
+    
+    <th> Foto </th>
+
+  </tr>
+               {% for actividad in ultimas_actividades %}
+                  <tr >
+                    {% if actividad %}
+                    <th> {{ actividad.dia_hora_inicio }}</th>
+                    <th> {{ actividad.dia_hora_termino }}</th>
+                    <th> {{ obtener_comuna(actividad.comuna_id) }}</th>
+                    <th> {{ actividad.sector }}</th>
+                    <th> {{ obtener_tema(actividad.id) }}</th>
+                    <th> <img src="{{ obtener_foto(actividad.id)}}" alt="Foto" style="max-width: 100px; max-height: 100px;"></th>
+                    {% else %}
+                      <li>No hay actividades registradas aún.</li>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+  
+
+   
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   </body>
 

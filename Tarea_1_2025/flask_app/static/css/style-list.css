@@ -17,13 +17,11 @@ table {
 
 
 }
-tr:first-child {
-
+thead tr:first-child {
     background-color: #ff0080;
     font-size: x-large;
     color: #fff
-
-  }
+}
 
 
   th:first-child{
@@ -44,7 +42,7 @@ th:nth-last-child(1){
 
 
 
-  .Menu{
+  .Menu {
   margin-bottom: 20px;
   padding: 3px 10px;
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
@@ -60,7 +58,35 @@ th:nth-last-child(1){
 
  
 }
+
+.botones_paginas {
+    display: flex; 
+    align-items: center;
+    justify-content: center; 
+    gap: 10px; 
+    margin-top: 20px; 
+}
+  .boton{
+  margin-bottom: 20px;
+  padding: 3px 10px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-weight: 1000;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: medium;
+  align-items: center;
+  transition: all 0.5s ease-in-out;
+  background: #ff0080;
+  color: white;
+    width: 200px;
+
+ 
+}
 .Menu:hover {
+  background: white;
+  color: #ff0080;
+}
+.boton:hover {
   background: white;
   color: #ff0080;
 }
