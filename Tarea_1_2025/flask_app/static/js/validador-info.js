@@ -91,7 +91,8 @@ const validateEmail = (email) => {
 };
 
 const validatePhoneNumber = (phoneNumber) => {
-  if (!phoneNumber) return false;
+
+  if (!phoneNumber) return true;
   let lengthValid = phoneNumber.length >= 8;
 
   let re = /^\+\d{3}\.\d{8}$/;
@@ -132,7 +133,7 @@ const validateInitialDate = (date)=>{
 return  formatValid;
  }
 const validateFinalDate = (date1, date2) =>{
- if (!date2) return false;
+ if (!date2) return true;
  let re = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
  let formatValid = re.test(date2);
 const d1 = new Date(date1);
@@ -200,6 +201,8 @@ const validateForm = (event)=> {
 
     }
     if(!validateSelect(contact)){
+        if (!contact) return true;
+        
         setInvalidInput("Selección contacto");
     }
     if (validateSelect(contact)&&!validateAnyText(description_contact,4,50)){
