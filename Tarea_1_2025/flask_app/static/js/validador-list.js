@@ -1,3 +1,5 @@
+
+
 document.addEventListener('DOMContentLoaded', function() {
     const activitiesBody = document.getElementById('activities-body'); 
     const prevButton = document.getElementById('prev-boton');

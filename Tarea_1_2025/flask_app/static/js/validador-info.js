@@ -235,13 +235,11 @@ const validateForm = (event)=> {
         
     if (!isValid) {
             validationListElem.textContent = "";
-            // agregar elementos inválidos al elemento val-list.
             for (input of invalidInputs) {
             let listElement = document.createElement("li");
             listElement.innerText = input;
             validationListElem.append(listElement);
             }
-            // establecer val-msg
             validationMessageElem.innerText = "Los siguientes campos son inválidos:";
 
             // aplicar estilos de error
@@ -299,7 +297,7 @@ function sendFormData() {
     .then((data) => {
     console.log("Data success:", data.success); 
       if (data.success) {
-                  console.log("Llamando a popup2() desde sendFormData"); // Para confirmar que se intenta llamar
+                  console.log("Llamando a popup2() desde sendFormData"); 
 
             popup2();
       } else {

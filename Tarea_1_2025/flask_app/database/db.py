@@ -267,16 +267,18 @@ def obtener_actividad_por_id(id):
 
 def foto_detalle(id):
     session = SessionLocal()
-    try:
-        foto = session.query(Foto.ruta_archivo).filter(Foto.actividad_id == id).first()
+    
+    fotos = session.query(Foto.ruta_archivo).filter(Foto.actividad_id == id).all()
+    rutas_corregidas = []
+    for foto in fotos:
         if foto and foto[0]:
+                ruta_corregida = foto[0].replace('\\', '/')
+                rutas_corregidas.append(ruta_corregida)
+    
+    session.close()
 
-            ruta_corregida = foto[0].replace('\\', '/')
-            
-            return ruta_corregida
-        return None
-    finally:
-        session.close()
+    return rutas_corregidas
+    
 
 def obtener_contacto_por_id(id):
      session = SessionLocal()

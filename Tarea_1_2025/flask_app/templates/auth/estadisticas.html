@@ -22,17 +22,19 @@
 
     <h2>Gráfico cantidad de actividades por día </h2>
     <div id ="First-graph">
-        <img src="fotos/grafo1.png" alt="book " width="520" height="400" >
+    <img src="{{ url_for('static', filename='svg/fotos/grafo1.png') }}" alt="book" width="520" height="400">
     </div>
     <h2>Gráfico cantidad de actividades por tipo </h2>
     <div id ="second-graph">
-        <img src="fotos/grafo2.png" alt="book " width="520" height="400" >
+    <img src="{{ url_for('static', filename='svg/fotos/grafo2.png') }}" alt="book" width="520" height="400">
     </div>
     <h2>Gráfico cantidad de actividades por mes </h2>
     <div id ="third-graph">
-        <img src="fotos/grafo3.png" alt="book " width="520" height="400" >
+    <img src="{{ url_for('static', filename='svg/fotos/grafo3.png') }}" alt="book" width="520" height="400">
     </div>
+    <button class="Menu" id="menu_boton" onclick="window.location.href='{{ url_for('index') }}'">Volver al menú principal
+</button>
 </body>
-<button class="Menu" id="menu_boton" onclick="window.location.href='{{ url_for('index') }}'">Volver al menú principal</button>         
+         
 
 </html>

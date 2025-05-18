@@ -38,17 +38,37 @@
             <ul>
             <li><strong>Plataforma:</strong> {{ obtener_contacto(actividad.id).nombre.value }}</li>
             <li><strong>Cuenta:</strong> {{ obtener_contacto(actividad.id).identificador }}</li>
+            <li class = "Image-container">
+            
+            {% if obtener_foto(actividad.id) %}
+                    <p>Fotos de la actividad:</p>
+                    <ul>
+                        {% for ruta in obtener_foto(actividad.id) %}
+                        <li><img  class = "image" src="{{ url_for('static', filename=ruta) }}" alt="Fotos de la actividad"></li>
+                        {% endfor %}
+                    </ul>
+            {% else %}
+                    <p>No hay fotos disponibles para esta actividad.</p>
+            {% endif %}
+            
+            </li>            
+           
             </ul>
+             <div class="popup-im">
+                <span>&times;</span>
+                <img src="{{ url_for('static', filename='svg/fotos/trans.jpg') }}"  alt="Imagen ampliada">
+            </div>
 
 
 
-<li class = "image"><strong>Total fotos:</strong> <img src="{{ url_for('static', filename=obtener_foto(actividad.id).replace('/detalle/', '', 1).replace('static/', '', 1)) }}" alt="Foto" style="max-width: 200px; max-height: 200px;"></li>            </ul>
 
 
           <button class="Menu" onclick="window.location.href='{{ url_for('index') }}'">Volver al menú principal</button>
             <button class="back" onclick="window.history.back()">Volver lista de actividades</button>
         </div>   
          </div>
-
+  {% block javascript %}
+                    <script src="{{ url_for('static', filename='js/validador-detalles.js') }}"></script>
+                {% endblock %}
 
 </html>
