@@ -139,6 +139,23 @@ def detalle(id):
     actividad = db.obtener_actividad_por_id(id)
     print(f'esta',actividad.id)
     return render_template("auth/detalle.html", actividad = actividad, obtener_tema=db.obtener_tema_por_id, obtener_comuna= db.comuna_por_id, obtener_foto= db.foto_detalle, obtener_contacto = db.obtener_contacto_por_id)
+#----------------------Estadísticas-------------------------------
+@app.route("/get-stats-data", methods=["GET"])
+def estadisticas_por_dia():
+     data = db.obtener_actividades_por_dia()
+     ##debería manejar errores aqui, para despues.
+     return jsonify(data)
+@app.route("/get-type-activity", methods=["GET"])
+def estadisticas_por_tipo():
+     data = db.obtener_actividades_por_tipo()
+     return jsonify(data)
+
+@app.route("/get-timed-activities", methods=["GET"])
+def estadisticas_por_hora():
+     data = db.obtener_actividades_por_meses_y_horas()
+     print("Datos obtenidos para el tercer gráfico:", data) 
+
+     return jsonify(data)
 
 @app.route("/estadisticas", methods = ["GET"])
 def estadisticas():

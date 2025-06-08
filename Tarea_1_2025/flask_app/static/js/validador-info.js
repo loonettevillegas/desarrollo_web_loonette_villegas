@@ -56,7 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-/*hidden value for channel description*/
  document.getElementById("contact_select_form").addEventListener("change", function() {
             let inputContainer = document.getElementById("contact-selection");
             if (this.value) {
@@ -202,7 +201,7 @@ const validateForm = (event)=> {
     }
     if(!validateSelect(contact)){
         if (!contact) return true;
-        
+
         setInvalidInput("Selección contacto");
     }
     if (validateSelect(contact)&&!validateAnyText(description_contact,4,50)){

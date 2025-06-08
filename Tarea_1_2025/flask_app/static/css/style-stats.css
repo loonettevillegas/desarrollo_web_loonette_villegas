@@ -33,3 +33,34 @@ font-size: large;
   background: white;
   color: #ff0080;
 }
+ .first-figure {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+.first-container {
+    width: 100%;
+    height: 400px; 
+}
+
+ .second-figure {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+.second-container {
+    width: 100%;
+    height: 400px; 
+}
+ .third-figure {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+.third-container {
+    width: 100%;
+    height: 400px; 
+}

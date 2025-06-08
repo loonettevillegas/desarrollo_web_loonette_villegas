@@ -1,10 +1,11 @@
 
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey,Enum, delete
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey,Enum, delete, func, case, and_, extract
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 from werkzeug.utils import secure_filename
 from flask import url_for
 from sqlalchemy.orm import joinedload
+from decimal import Decimal
 
 import os
 import pymysql
@@ -107,6 +108,17 @@ class ActividadTema(Base):
 	actividad_id = Column(Integer, ForeignKey('actividad.id'), primary_key=True) 
 	actividad = relationship("Actividad", backref="temas")
 
+class Comentario(Base):
+    __tablename__ =  'comentario'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nombre = Column(String(80), nullable=False)
+    texto = Column(String(300), nullable=False)
+    #fecha = 
+
+    
+    
+
+     
 
 
 # -- definir funciones ---
@@ -211,6 +223,10 @@ def create_fotos(session, actividad_id, fotos):
             except Exception as e:
                 print(f"Error al guardar el archivo: {e}")
                 session.rollback()
+
+def create_comentario(comentario):
+     pass
+     
 def obtener_last_five_actividades():
     session = SessionLocal()
     try:
@@ -228,6 +244,8 @@ def obtener_tema_por_id(actividad_id):
      actividad_tema = session.query(ActividadTema).filter_by(actividad_id=actividad_id).first()
      session.close()
      return actividad_tema.tema.value if actividad_tema else None
+
+
 def comuna_por_id(id):
     session = SessionLocal()
     try:
@@ -259,11 +277,69 @@ def obtener_todas_actividades(page):
 def cantidad_actividades():
      session = SessionLocal()
      sum = session.query(Actividad).count()
+    
+     session.close()
+
      return sum
 def obtener_actividad_por_id(id):
     session = SessionLocal()
     actividad = session.query(Actividad).filter(Actividad.id == id).first()
+    
+    session.close()
     return actividad
+
+
+def obtener_actividades_por_tipo():
+     session =  SessionLocal()
+     actividades_por_tipo =  session.query(
+            ActividadTema.tema,
+            func.count(ActividadTema.id).label('count')
+        ).group_by(
+            ActividadTema.tema
+        ).all()
+     session.close()
+
+     return [{'type': row.tema.value, 'count': row.count} for row in actividades_por_tipo]
+
+
+def obtener_actividades_por_meses_y_horas():
+    session = SessionLocal()
+    meses = {1: 'Enero', 2: 'Febrero', 3: 'Marzo', 4: 'Abril',
+            5: 'Mayo', 6: 'Junio', 7: 'Julio', 8: 'Agosto',
+            9: 'Septiembre', 10: 'Octubre', 11: 'Noviembre', 12: 'Diciembre'
+        }
+    hora  = extract('hour', Actividad.dia_hora_inicio)
+    mañana = and_(hora >= 8, hora <= 11)
+    mediodia = and_(hora >= 12, hora <= 17)
+    tarde = and_(hora >= 18, hora <= 23)
+    actividades_segun_hora = session.query(
+            extract('year', Actividad.dia_hora_inicio).label('year_num'),
+            extract('month', Actividad.dia_hora_inicio).label('month_num'),
+            func.sum(case((mañana, 1), else_=0)).label('cantidad_en_mañana'),
+            func.sum(case((mediodia, 1), else_=0)).label('cantidad_en_mediodia'),
+            func.sum(case((tarde, 1), else_=0)).label('cantidad_en_tarde')
+        ).group_by(
+            extract('year', Actividad.dia_hora_inicio),
+            extract('month', Actividad.dia_hora_inicio)
+        ).order_by(
+            extract('year', Actividad.dia_hora_inicio),
+            extract('month', Actividad.dia_hora_inicio)
+        ).all()
+    datos_por_mes = []
+    for row in actividades_segun_hora:
+            month_label = f"{meses.get(row.month_num, 'Desconocido')} {row.year_num}"
+            datos_por_mes.append({
+                'month_label': month_label,
+                'mañana': int(row.cantidad_en_mañana),
+                'mediodia': int(row.cantidad_en_mediodia),
+                'tarde': int(row.cantidad_en_tarde)
+            })
+    session.close()
+    return datos_por_mes
+
+
+     
+
 
 def foto_detalle(id):
     session = SessionLocal()
@@ -286,8 +362,21 @@ def obtener_contacto_por_id(id):
      session.close()
      return contacto
 
+def obtener_actividades_por_dia():
+     session= SessionLocal()
+     actividades_por_dia = session.query(
+            func.date(Actividad.dia_hora_inicio).label('Fecha'),
+            func.count(Actividad.id).label('conteo')
+        ).group_by(
+            func.date(Actividad.dia_hora_inicio)
+        ).order_by(
+            func.date(Actividad.dia_hora_inicio) 
+        ).all()
 
+        
 
+     session.close()
+     return [{'date': str(row.Fecha), 'count': row.conteo} for row in actividades_por_dia] 
 def eliminar_todos_los_datos(nombre_tabla):
     session = SessionLocal()
     try:
