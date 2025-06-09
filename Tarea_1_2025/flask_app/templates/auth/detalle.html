@@ -61,12 +61,55 @@
 
 
 
+<div class="comentarios-section">
+    <h2 class="comentario-head">Comentarios</h2>
+    <div id="lista-comentarios">
+        <p>Cargando comentarios...</p> 
+    </div>
+</div>
+   
+
+    <form name="second-form" id="second-form" method="POST" enctype="multipart/form-data">
+    <div class ="comentario-container">
+    
+            <h1 class = "comentario-head">Deja un comentario</h1>
+     
+     <div id="nameComentario-input" >
+                    <label class="titles-comentarios" >Nombre </label>
+                    <input class="name-input" id="name_input" name="Nombre comentador" type="text" minlength="3" maxlength="80">
+                </div>
+
+      <div id="Comentario" >
+                            <label class="titles-comentarios" > Comentario</label>
+                            <textarea class="comentario-input" id="comentario-input" name="comentarioinput" rows="4" cols="50"></textarea>
+                        </div>
+    
+
+        <button class="submit-btn" id="submit-btn"  type="submit" >
+                                    Agregar comentario
+                        </button>   
+        </div> 
+
+        <div class="popup-exito"  style="display: none;">
+        <p class = "texto-popup"> Comentario recibido con éxito</p>
+        </div>
+
+        <div class="popup-fail"  style="display: none;">
+        <p class = "texto-popup"> No fue posible enviar el comentario, intente nuevamente...</p>
+        </div>
+     </form>     
+
+
+
 
 
           <button class="Menu" onclick="window.location.href='{{ url_for('index') }}'">Volver al menú principal</button>
             <button class="back" onclick="window.history.back()">Volver lista de actividades</button>
         </div>   
          </div>
+
+
+
   {% block javascript %}
                     <script src="{{ url_for('static', filename='js/validador-detalles.js') }}"></script>
                 {% endblock %}

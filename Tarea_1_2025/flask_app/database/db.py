@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 from werkzeug.utils import secure_filename
 from flask import url_for
 from sqlalchemy.orm import joinedload
-from decimal import Decimal
+from datetime import datetime
 
 import os
 import pymysql
@@ -113,7 +113,11 @@ class Comentario(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     nombre = Column(String(80), nullable=False)
     texto = Column(String(300), nullable=False)
-    #fecha = 
+    fecha = Column(DateTime, nullable=False)
+    actividad_id = Column(Integer, ForeignKey('actividad.id'), nullable=False)
+    actividad = relationship("Actividad", backref="comentarios")
+
+
 
     
     
@@ -224,8 +228,23 @@ def create_fotos(session, actividad_id, fotos):
                 print(f"Error al guardar el archivo: {e}")
                 session.rollback()
 
-def create_comentario(comentario):
-     pass
+def create_comentario(new_nombre, new_comentario,id_actividad):
+    session = SessionLocal()
+    nuevo_comentario = Comentario(nombre= new_nombre, texto = new_comentario,fecha=datetime.now(),    
+            actividad_id=id_actividad)
+    session.add(nuevo_comentario)
+
+    session.commit()
+    session.close()
+    return True
+    
+def obtener_comentarios(id):
+     session = SessionLocal()
+
+     comentarios = session.query(Comentario).filter_by(actividad_id=id)
+     
+     session.close()
+     return comentarios
      
 def obtener_last_five_actividades():
     session = SessionLocal()

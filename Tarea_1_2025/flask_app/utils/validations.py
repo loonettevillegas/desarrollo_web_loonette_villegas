@@ -194,3 +194,12 @@ def validar_actividad(region,comuna, nombre, email, celular, sector, descripcion
         return True
     else:
         return False
+    
+##validar comentario
+def validar_comentario(nombre, comentario):
+    valid_length_nombre = validar_tamano(nombre, 3,80)
+    valid_length_comentario = validar_tamano(nombre, 5,10000000)
+    return valid_length_comentario and valid_length_nombre
+
+
+    

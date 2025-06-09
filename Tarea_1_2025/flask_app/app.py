@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, redirect, url_for, session,jsonify
-from utils.validations import validar_actividad
+from utils.validations import validar_actividad, validar_comentario
 from database import db
 
 from werkzeug.utils import secure_filename
@@ -131,14 +131,47 @@ def actividades_paginadas():
         'total_pages': total_pages,
         'current_page': page
     })
-    
+
+
+
+
 #----------------------------------------actividades----------------------------------------------
-@app.route("/detalle/<int:id>", methods=["GET"])
+@app.route("/detalle/<int:id>", methods=["GET","POST"])
 def detalle(id):
-    print(id)
-    actividad = db.obtener_actividad_por_id(id)
-    print(f'esta',actividad.id)
-    return render_template("auth/detalle.html", actividad = actividad, obtener_tema=db.obtener_tema_por_id, obtener_comuna= db.comuna_por_id, obtener_foto= db.foto_detalle, obtener_contacto = db.obtener_contacto_por_id)
+    if request.method == "GET":
+        actividad = db.obtener_actividad_por_id(id)
+        
+        print(f'esta',actividad.id)
+        return render_template("auth/detalle.html", actividad = actividad, obtener_tema=db.obtener_tema_por_id, obtener_comuna= db.comuna_por_id, obtener_foto= db.foto_detalle, obtener_contacto = db.obtener_contacto_por_id)
+    else:
+        nombre = request.form.get("Nombre comentador")
+        comentario = request.form.get("comentarioinput")
+        comentario_valido = validar_comentario(nombre, comentario)
+        if comentario_valido:
+             coment = db.create_comentario(nombre, comentario, id)
+             if coment is None:
+                        return jsonify({'success': False,  "message": " No se pudo"})
+
+           
+
+        
+        return jsonify({'success': True,  "message": " Se pudo"})
+
+@app.route("/todos_los_comentarios/<int:id>", methods=["GET"])
+def todos_los_comentarios(id):
+     comentarios = db.obtener_comentarios(id)
+     all_comentarios=[]
+     for comentario in comentarios:
+            all_comentarios.append({
+                'id': comentario.id,
+                'nombre': comentario.nombre,
+                'texto': comentario.texto,
+                'fecha': comentario.fecha.strftime("%Y-%m-%d %H:%M:%S") 
+                                                                        
+            })
+     return jsonify(all_comentarios)
+
+         
 #----------------------Estadísticas-------------------------------
 @app.route("/get-stats-data", methods=["GET"])
 def estadisticas_por_dia():
