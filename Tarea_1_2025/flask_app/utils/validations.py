@@ -145,6 +145,7 @@ def validar_sector(sector):
 
 ##Validar actividad
 def validar_actividad(region,comuna, nombre, email, celular, sector, descripcion, inicio, fin, tema, contacto, fotos):
+    
     print(f"Validando región: {region}")
     region_valida = validar_region(region)
     print(f"Resultado validación región: {region_valida}")

@@ -44,12 +44,13 @@
     </div>
 
     <button class="Menu" id="menu_boton" onclick="window.location.href='{{ url_for('index') }}'">Volver al menú principal</button>
-</body>
-       {% block javascript %}
+{% block javascript %}
                   
                   <script src="https://code.highcharts.com/highcharts.js"></script>
 
                     <script src="{{ url_for('static', filename='js/validador_estadisticas.js') }}"></script>
                 {% endblock %}  
+</body>
+       
 
 </html>
